@@ -16,7 +16,7 @@ public class GatewayConfig {
     private String route1Uri;
 
     @Value("${gateway.route1.predicates}")
-    private String route1Paths;
+    private String[] route1Paths;
 
     @Value("${gateway.route2.id}")
     private String route2Id;
@@ -25,7 +25,7 @@ public class GatewayConfig {
     private String route2Uri;
 
     @Value("${gateway.route2.predicates}")
-    private String route2Paths;
+    private String[] route2Paths;
 
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
