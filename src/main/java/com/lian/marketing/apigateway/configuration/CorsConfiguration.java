@@ -1,4 +1,4 @@
-package com.lian.marketing.transactionmicroservice.configuration;
+package com.lian.marketing.apigateway.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.config.CorsRegistry;
