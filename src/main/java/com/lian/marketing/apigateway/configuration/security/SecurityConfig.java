@@ -2,6 +2,7 @@ package com.lian.marketing.apigateway.configuration.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -20,7 +21,8 @@ public class SecurityConfig {
       .cors(Customizer.withDefaults())
       .authorizeExchange(auth -> auth
         .pathMatchers("/auth/**").permitAll()
-        .anyExchange().authenticated()
+              .pathMatchers(HttpMethod.OPTIONS).permitAll()
+              .anyExchange().authenticated()
       )
       .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()))
       .build();
