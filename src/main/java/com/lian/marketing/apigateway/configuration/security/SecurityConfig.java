@@ -17,6 +17,7 @@ public class SecurityConfig {
   public SecurityWebFilterChain authSecurity(ServerHttpSecurity http) {
     return http
       .csrf(ServerHttpSecurity.CsrfSpec::disable)
+      .cors(Customizer.withDefaults())
       .authorizeExchange(auth -> auth
         .pathMatchers("/auth/**").permitAll()
         .anyExchange().authenticated()
