@@ -38,6 +38,7 @@ spring:
           uri: ${URI_USER_MICROSERVICE}
           predicates:
             - Path=/auth/**
+            - Path=/user/**
         # TRANSACTION MICROSERVICE
         - id: ${ID_TRANSACTION_MICROSERVICE}
           uri: ${URI_TRANSACTION_MICROSERVICE}
