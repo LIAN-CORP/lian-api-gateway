@@ -17,6 +17,7 @@ public class CorsGlobalConfiguration {
     cors.setAllowedOrigins(List.of("http://localhost:3000"));
     cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     cors.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Content-Disposition"));
+    cors.setExposedHeaders(List.of("Content-Disposition"));
     cors.setAllowCredentials(true);
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", cors);
