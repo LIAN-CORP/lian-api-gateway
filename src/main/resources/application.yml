@@ -1,0 +1,77 @@
+spring:
+  application:
+    name: api-gateway
+
+  config:
+    import: optional:file:.env[.properties]
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      #globalcors:
+      #  add-to-simple-url-handler-mapping: true
+      #  cors-configurations:
+      #    '[/**]':
+      #      allowed-origins:
+      #        - "http://localhost:3000"
+      #      allowed-methods:
+      #        - GET
+      #        - POST
+      #        - PUT
+      #        - DELETE
+      #        - OPTIONS
+      #      allowed-headers: "*"
+      #      allow-credentials: true
+      routes:
+        # STOCK MICROSERVICE
+        - id: ${ID_STOCK_MICROSERVICE}
+          uri: ${URI_STOCK_MICROSERVICE}
+          predicates:
+            - Path=/product/**
+            - Path=/category/**
+            - Path=/subcategory/**
+        # USER MICROSERVICE
+        - id: ${ID_USER_MICROSERVICE}
+          uri: ${URI_USER_MICROSERVICE}
+          predicates:
+            - Path=/auth/**
+            - Path=/user/**
+        # TRANSACTION MICROSERVICE
+        - id: ${ID_TRANSACTION_MICROSERVICE}
+          uri: ${URI_TRANSACTION_MICROSERVICE}
+          predicates:
+            - Path=/transaction/**
+            - Path=/client/**
+            - Path=/detail-transaction/**
+        # PAYMENT MICROSERVICE
+        - id: ${ID_PAYMENT_MICROSERVICE}
+          uri: ${URI_PAYMENT_MICROSERVICE}
+          predicates:
+            - Path=/payment/**
+            - Path=/debt/**
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${JWK_URI}
+
+server:
+  port: 8000
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+
+spring.cloud.loadbalancer.ribbon.enabled: false
+
+logging:
+  level:
+    root: info
+    com.lian.marketing.apigateway: debug
+    org.springframework.security: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.gateway.handler: DEBUG

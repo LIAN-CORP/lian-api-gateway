@@ -1,44 +1,40 @@
 package com.lian.marketing.apigateway.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 @Configuration
+@Slf4j
+@RequiredArgsConstructor
 public class GatewayConfig {
 
-    @Value("${gateway.route1.id}")
-    private String route1Id;
+  private final RoutingConfig routingConfig;
 
-    @Value("${gateway.route1.uri}")
-    private String route1Uri;
-
-    @Value("${gateway.route1.predicates}")
-    private String[] route1Paths;
-
-    @Value("${gateway.route2.id}")
-    private String route2Id;
-
-    @Value("${gateway.route2.uri}")
-    private String route2Uri;
-
-    @Value("${gateway.route2.predicates}")
-    private String[] route2Paths;
-
-    @Bean
-    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
-        return builder.routes()
-                .route(route1Id, r -> r
-                        .path(route1Paths)
-                        .uri(route1Uri)
-                )
-                .route(route2Id, r -> r
-                        .path(route2Paths)
-                        .uri(route2Uri)
-                )
-                .build();
+  @Bean
+  public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+    RouteLocatorBuilder.Builder routes = builder.routes();
+    List<RoutingConfig.RouteConfig> routeList = routingConfig.getRoutes();
+    if(!routeList.isEmpty()){
+      routeList.forEach(route -> {
+        String[] paths = route.getPredicates().stream().map(p -> {
+          String[] parts = p.split("=", 2);
+          if(parts.length == 2 && "Path".equalsIgnoreCase(parts[0].trim())){
+            return parts[1].trim();
+          } else {
+            throw new IllegalArgumentException("Invalid predicate: " + p + " Must be of the form 'Path=/some/path'");
+          }
+        }).toArray(String[]::new);
+        routes.route(route.getId(), r -> r.path(paths).uri(route.getUri()));
+      });
     }
+
+    return routes.build();
+  }
 
 }
