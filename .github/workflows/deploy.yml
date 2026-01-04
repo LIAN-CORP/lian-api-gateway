@@ -5,10 +5,16 @@ on:
     branches: [ main ]
     types:
       - closed
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy'
+        required: true
+        default: 'main'
 
 jobs:
   deploy:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
     uses: lian-corp/lian-devops/.github/workflows/build-deploy-ec2.yml@main
     with:
       image_name: lian-corp/lian-api-gateway
