@@ -18,7 +18,7 @@ jobs:
     uses: lian-corp/lian-devops/.github/workflows/build-deploy-ec2.yml@main
     with:
       image_name: lian-corp/lian-api-gateway
-      service_name: lian-api-gateway
+      service_name: apigateway-service
       deploy_path: /home/ec2-user/docker/entrypoint
     secrets:
       EC2_HOST: ${{ secrets.EC2_ENTRYPOINT_HOST }}
