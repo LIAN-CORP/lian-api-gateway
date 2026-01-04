@@ -25,3 +25,6 @@ jobs:
       EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
       EC2_KEY: ${{ secrets.EC2_ENTRYPOINT_KEY }}
       GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+    permissions:
+      contents: read
+      packages: write
