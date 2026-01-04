@@ -19,6 +19,7 @@ jobs:
     with:
       image_name: lian-corp/lian-api-gateway
       service_name: lian-api-gateway
+      deploy_path: /home/ec2-user/docker/entrypoint
     secrets:
       EC2_HOST: ${{ secrets.EC2_ENTRYPOINT_HOST }}
       EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
