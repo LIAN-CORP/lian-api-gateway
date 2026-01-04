@@ -9,7 +9,7 @@ on:
 jobs:
   deploy:
     if: github.event.pull_request.merged == true
-    uses: lian-corp/lian-devops/.github/workflows/build-deploy-ec2.yml@v1
+    uses: lian-corp/lian-devops/.github/workflows/build-deploy-ec2.yml@main
     with:
       image_name: lian-corp/lian-api-gateway
       service_name: lian-api-gateway
