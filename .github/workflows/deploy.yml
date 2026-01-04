@@ -1,0 +1,20 @@
+name: Deploy API Gateway
+
+on:
+  pull_request:
+    branches: [ main ]
+    types:
+      - closed
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    uses: lian-corp/lian-devops/.github/workflows/build-deploy-ec2.yml@v1
+    with:
+      image_name: lian-corp/lian-api-gateway
+      service_name: lian-api-gateway
+    secrets:
+      EC2_HOST: ${{ secrets.EC2_ENTRYPOINT_HOST }}
+      EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
+      EC2_KEY: ${{ secrets.EC2_ENTRYPOINT_KEY }}
+      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
