@@ -1,5 +1,6 @@
 package com.lian.marketing.apigateway.configuration.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,6 +14,9 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
+
+  @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
+  private String jwtSecretUri;
 
   @Bean
   public SecurityWebFilterChain authSecurity(ServerHttpSecurity http) {
@@ -30,7 +34,7 @@ public class SecurityConfig {
 
   @Bean
   public ReactiveJwtDecoder jwtDecoder() {
-    return NimbusReactiveJwtDecoder.withJwkSetUri("http://localhost:8081/.well-known/jwks.json").build();
+    return NimbusReactiveJwtDecoder.withJwkSetUri(jwtSecretUri).build();
   }
 
 }
