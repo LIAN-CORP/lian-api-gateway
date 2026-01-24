@@ -14,7 +14,7 @@ public class CorsGlobalConfiguration {
   @Bean
   public CorsWebFilter corsWebFilter() {
     CorsConfiguration cors = new CorsConfiguration();
-    cors.setAllowedOrigins(List.of("http://localhost:3000"));
+    cors.setAllowedOrigins(List.of("*"));
     cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     cors.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Content-Disposition"));
     cors.setExposedHeaders(List.of("Content-Disposition"));
