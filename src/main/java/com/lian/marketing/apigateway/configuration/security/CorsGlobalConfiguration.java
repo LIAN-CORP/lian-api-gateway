@@ -14,9 +14,9 @@ public class CorsGlobalConfiguration {
   @Bean
   public CorsWebFilter corsWebFilter() {
     CorsConfiguration cors = new CorsConfiguration();
-    cors.setAllowedOrigins(List.of("*"));
+    cors.setAllowedOriginPatterns(List.of("*"));
     cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    cors.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Content-Disposition"));
+    cors.setAllowedHeaders(List.of("*"));
     cors.setExposedHeaders(List.of("Content-Disposition"));
     cors.setAllowCredentials(true);
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
